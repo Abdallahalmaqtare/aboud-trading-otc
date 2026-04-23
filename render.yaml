@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: aboud-trading-otc
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -c gunicorn_config.py main:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: PORT
+        value: "10000"
+      - key: DEBUG
+        value: "false"
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: ADMIN_USER_IDS
+        sync: false
+      - key: POCKET_OPTION_SSID
+        sync: false
+      - key: POCKET_OPTION_IS_DEMO
+        value: "1"
+      - key: BOT_UTC_OFFSET
+        value: "3"
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SIGNALS_ENABLED
+        value: "true"
+      - key: DAILY_REPORT_HOUR
+        value: "18"

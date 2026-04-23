@@ -1,0 +1,32 @@
+# =====================================================
+# Aboud Trading Bot OTC v1.0 - Dependencies
+# =====================================================
+# Python 3.10+
+
+# Web Framework
+flask==3.1.0
+gunicorn==23.0.0  # WSGI HTTP Server for Render
+
+# Telegram Bot
+python-telegram-bot==21.9
+
+# HTTP Client (async) + WebSocket
+aiohttp==3.11.11
+websockets==12.0
+
+# Pocket Option API
+# المكتبة الرسمية للاتصال بـ Pocket Option عبر WebSocket
+pocketoptionapi-async>=1.0.0
+
+# Data Analysis (للمؤشرات الفنية)
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Scheduler
+APScheduler==3.11.0
+
+# Database (PostgreSQL)
+psycopg2-binary==2.9.10
+
+# Utilities
+python-dotenv==1.0.1
