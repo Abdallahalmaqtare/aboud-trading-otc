@@ -6,7 +6,13 @@ load_dotenv()
 # Telegram Configuration
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
-ADMIN_USER_IDS = [int(id.strip()) for id in os.getenv("ADMIN_USER_IDS", "").split(",") if id.strip()]
+
+# معالجة معرفات الإدارة بشكل آمن
+admin_ids_raw = os.getenv("ADMIN_USER_IDS", "")
+if admin_ids_raw:
+    ADMIN_USER_IDS = [int(id.strip()) for id in admin_ids_raw.split(",") if id.strip().isdigit()]
+else:
+    ADMIN_USER_IDS = []
 
 # Pocket Option Configuration
 POCKET_OPTION_SSID = os.getenv("POCKET_OPTION_SSID")
