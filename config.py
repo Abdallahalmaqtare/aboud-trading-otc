@@ -10,7 +10,10 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 # معالجة معرفات الإدارة بشكل آمن
 admin_ids_raw = os.getenv("ADMIN_USER_IDS", "")
 if admin_ids_raw:
-    ADMIN_USER_IDS = [int(id.strip()) for id in admin_ids_raw.split(",") if id.strip().isdigit()]
+    try:
+        ADMIN_USER_IDS = [int(id.strip()) for id in admin_ids_raw.split(",") if id.strip().isdigit()]
+    except:
+        ADMIN_USER_IDS = []
 else:
     ADMIN_USER_IDS = []
 
@@ -31,10 +34,11 @@ PAIR_DISPLAY_NAMES = {
 MIN_SIGNAL_SCORE = 6
 BOT_UTC_OFFSET = int(os.getenv("BOT_UTC_OFFSET", "3"))
 
-# المتغيرات التي كانت تسبب الخطأ (تمت إضافتها)
+# --- المتغيرات الضرورية لـ SignalManager (مهم جداً) ---
 TRADE_DURATION_MINUTES = 15
 SIGNAL_COOLDOWN_MINUTES = 30
 MAX_PENDING_TRADES = 5
+# ---------------------------------------------------
 
 # Database Configuration
 DATABASE_URL = os.getenv("DATABASE_URL")
