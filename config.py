@@ -31,6 +31,11 @@ PAIR_DISPLAY_NAMES = {
 MIN_SIGNAL_SCORE = 6
 BOT_UTC_OFFSET = int(os.getenv("BOT_UTC_OFFSET", "3"))
 
+# المتغيرات التي كانت تسبب الخطأ (تمت إضافتها)
+TRADE_DURATION_MINUTES = 15
+SIGNAL_COOLDOWN_MINUTES = 30
+MAX_PENDING_TRADES = 5
+
 # Database Configuration
 DATABASE_URL = os.getenv("DATABASE_URL")
 
