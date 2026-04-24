@@ -1,7 +1,6 @@
 """
-Aboud Trading Bot OTC - Main v1.8 (Frankfurt Edition)
+Aboud Trading Bot OTC - Main v1.9 (Fixed Connection Attribute)
 ============================================================
-نسخة محسنة للعمل من منطقة Frankfurt مع نظام اتصال ذكي
 """
 import asyncio, logging, threading, json, time, os, sys
 from datetime import datetime, timezone
@@ -30,11 +29,11 @@ def health():
     po_status = False
     try:
         from pocket_option_service import pocket_option_service
-        po_status = pocket_option_service._authenticated
+        # تم التصحيح هنا لاستخدام المتغير الصحيح
+        po_status = getattr(pocket_option_service, "_authenticated", False)
     except: pass
     return jsonify({
-        "bot": "Aboud Trading OTC v1.8",
-        "region": "Frankfurt (Optimized)",
+        "bot": "Aboud Trading OTC v1.9",
         "ready": state.ready,
         "telegram": state.telegram_active,
         "pocket_option": po_status,
@@ -45,13 +44,12 @@ def health():
 def start_bot_background():
     async def run():
         try:
-            logger.info("🚀 بدء تشغيل v1.8 في منطقة Frankfurt...")
+            logger.info("🚀 بدء تشغيل v1.9...")
             init_db()
             
             sender = TelegramSender()
             manager = SignalManager(sender)
             
-            # إعداد التيليغرام
             application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
             application.bot_data["signal_manager"] = manager
             setup_admin_handlers(application)
@@ -61,7 +59,6 @@ def start_bot_background():
             await application.updater.start_polling(drop_pending_updates=True)
             state.telegram_active = True
             
-            # تشغيل التحليل
             if POCKET_OPTION_SSID:
                 from pocket_option_service import pocket_option_service
                 await pocket_option_service.connect()
@@ -70,8 +67,8 @@ def start_bot_background():
                 asyncio.create_task(analysis_service.run())
             
             state.ready = True
-            logger.info("✅ v1.8 جاهز ويعمل في Frankfurt!")
-            await sender.send_text("🟢 <b>تم تشغيل البوت بنجاح v1.8</b>\nالمنطقة: Frankfurt (أفضل استقرار).")
+            logger.info("✅ v1.9 جاهز!")
+            await sender.send_text("🟢 <b>تم تشغيل البوت بنجاح v1.9</b>")
             
             while True: await asyncio.sleep(3600)
         except Exception as e:
@@ -82,7 +79,6 @@ def start_bot_background():
     asyncio.set_event_loop(loop)
     loop.run_until_complete(run())
 
-# بدء البوت
 thread = threading.Thread(target=start_bot_background, daemon=True)
 thread.start()
 
